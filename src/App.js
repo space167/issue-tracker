@@ -1,10 +1,9 @@
 import React from "react";
-import './App.css';
+import './App.sass';
 
 function App() {
   return (
     <div>
-
     </div>
   );
 }
