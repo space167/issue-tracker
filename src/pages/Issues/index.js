@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import SearchIcon from '@material-ui/icons/Search';
@@ -10,10 +10,9 @@ import {Header, IssueItem} from "../../components";
 import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
 import {useDispatch, useSelector} from "react-redux";
-import issueActions, {fetchCountItems} from "../../redux/actions/issues";
+import issueActions from "../../redux/actions/issues";
 
 import "./Issues.sass"
-
 
 const useStyles = makeStyles((theme) => ({
   pagination: {
@@ -45,17 +44,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 const Index = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const {isLoading, items} = useSelector(({issues}) => (issues));
+  const {isLoading, items, page, pages, countIssues, ...current} = useSelector(({issues}) => (issues));
   const [organization, setOrganization] = useState('facebook');
   const [repository, setRepository] = useState('react');
 
-  const isSmall = useMediaQuery({query: '(max-width: 399px)'})
-  const isMedium = useMediaQuery({query: '(min-width: 400px) and (max-width: 599px)'})
-  const isLarge = useMediaQuery({query: '(min-width: 600px)'})
+  const isSmall = useMediaQuery({query: '(max-width: 399px)'});
+  const isMedium = useMediaQuery({query: '(min-width: 400px) and (max-width: 599px)'});
+  const isLarge = useMediaQuery({query: '(min-width: 600px)'});
 
   const onHandlerChangeOrganization = (e) => {
     setOrganization(e.target.value)
@@ -67,6 +65,10 @@ const Index = () => {
 
   const searchIssues = () => {
     dispatch(issueActions.fetchDataIssues(organization, repository))
+  };
+
+  const handleChangePage = (event, value) => {
+    dispatch(issueActions.fetchItems(current.organization, current.repository, value))
   };
 
   return (
@@ -99,6 +101,7 @@ const Index = () => {
             />
           </Paper>
         </div>
+        {items && <h5>{`All issues: ${countIssues}`}</h5>}
         <div className={"items"}>
           {!isLoading ? items ? items.map((item) => (
               <IssueItem {...item} key={item.id}/>
@@ -110,9 +113,9 @@ const Index = () => {
         <div style={{textAlign: 'center'}}>
           {!isLoading && items &&
           <div className={classes.pagination}>
-            {isSmall && <Pagination count={3} shape={"rounded"}/>}
-            {isMedium && <Pagination count={5} shape={"rounded"}/>}
-            {isLarge && <Pagination count={10} shape={"rounded"}/>}
+            {isSmall && <Pagination onChange={handleChangePage} count={pages} defaultPage={page} siblingCount={0} size={"small"}  shape={"rounded"}/>}
+            {isMedium && <Pagination onChange={handleChangePage} count={pages} defaultPage={page} siblingCount={0} shape={"rounded"}/>}
+            {isLarge && <Pagination onChange={handleChangePage} count={pages} defaultPage={page} shape={"rounded"}/>}
           </div>}
         </div>
       </Paper>

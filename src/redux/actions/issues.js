@@ -14,17 +14,20 @@ const Actions = {
     payload,
   }),
   fetchDataIssues: (organization, repository) => async dispatch => {
+    dispatch(Actions.isLoading);
     let countIssues = await issuesAPI.getCountIssues(organization, repository);
     dispatch(Actions.setDataIssues({organization, repository, countIssues}))
     if (countIssues.total_count > 0) {
       dispatch(Actions.fetchItems(organization, repository, 1))
+    } else {
+      dispatch(Actions.setItems({issues: [], page: null}))
     }
   },
   setItems: payload => ({
     type: Types.SET_ITEMS,
     payload,
   }),
-  fetchItems: (organization, repository, page ) => async dispatch => {
+  fetchItems: (organization, repository, page) => async dispatch => {
     dispatch(Actions.isLoading);
     let issues = await issuesAPI.getIssues(organization, repository, page);
     dispatch(Actions.setItems({issues, page}))

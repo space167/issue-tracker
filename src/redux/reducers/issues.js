@@ -5,12 +5,13 @@ const initState = {
   repository: null,
   countIssues: 0,
   page: null,
+  pages: null,
   items: null,
   isLoading: false,
   error: null,
 };
 
-export default (state = initState, action) => {
+const issuesReducer = (state = initState, action) => {
   switch (action.type) {
     case Types.SET_ITEMS:
       return {
@@ -25,6 +26,7 @@ export default (state = initState, action) => {
         organization: action.payload.organization,
         repository: action.payload.repository,
         page: 1,
+        pages: Math.ceil(action.payload.countIssues.total_count/30),
         countIssues: action.payload.countIssues.total_count
       };
     case Types.LOADING:
@@ -45,3 +47,5 @@ export default (state = initState, action) => {
       return state;
   }
 };
+
+export default issuesReducer;

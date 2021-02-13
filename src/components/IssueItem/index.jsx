@@ -35,7 +35,7 @@ const IssueItem = props => {
 };
 
 IssueItem.propTypes = {
-  id: PropTypes.string,
+  id: PropTypes.number,
   title: PropTypes.string,
   created_at: PropTypes.string,
 };

@@ -20,7 +20,7 @@ export const issuesAPI = {
   },
   getIssues( organization, repository, page) {
     return instance
-      .get(`/repos/${organization}/${repository}/issues?page=${page}&per_page=30`)
+      .get(`/repos/${organization}/${repository}/issues?state=all&page=${page}&per_page=30`)
       .then(({data}) => {
         return data;
       })
