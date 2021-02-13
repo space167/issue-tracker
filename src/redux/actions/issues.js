@@ -8,19 +8,23 @@ export const Types = {
   ERROR: 'ISSUES@LOADING:ERROR',
 };
 
-const Actions = {
+const ActionsIssues = {
   setDataIssues: payload => ({
     type: Types.SET_DATA_ISSUES,
     payload,
   }),
   fetchDataIssues: (organization, repository) => async dispatch => {
-    dispatch(Actions.isLoading);
+    dispatch(ActionsIssues.isLoading);
     let countIssues = await issuesAPI.getCountIssues(organization, repository);
-    dispatch(Actions.setDataIssues({organization, repository, countIssues}))
-    if (countIssues.total_count > 0) {
-      dispatch(Actions.fetchItems(organization, repository, 1))
+    if (countIssues) {
+      dispatch(ActionsIssues.setDataIssues({organization, repository, countIssues}))
+      if (countIssues.total_count > 0) {
+        dispatch(ActionsIssues.fetchItems(organization, repository, 1))
+      } else {
+        dispatch(ActionsIssues.setItems({issues: [], page: null}))
+      }
     } else {
-      dispatch(Actions.setItems({issues: [], page: null}))
+      dispatch(ActionsIssues.isError("Failed to get data..."))
     }
   },
   setItems: payload => ({
@@ -28,9 +32,9 @@ const Actions = {
     payload,
   }),
   fetchItems: (organization, repository, page) => async dispatch => {
-    dispatch(Actions.isLoading);
+    dispatch(ActionsIssues.isLoading);
     let issues = await issuesAPI.getIssues(organization, repository, page);
-    dispatch(Actions.setItems({issues, page}))
+    dispatch(ActionsIssues.setItems({issues, page}))
   },
   isLoading: {
     type: Types.LOADING,
@@ -38,10 +42,10 @@ const Actions = {
   isLoaded: {
     type: Types.LOADED,
   },
-  isError: err => ({
+  isError: payload => ({
     type: Types.ERROR,
-    payload: err,
+    payload,
   }),
 };
 
-export default Actions;
+export default ActionsIssues;

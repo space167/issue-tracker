@@ -7,15 +7,15 @@ export const Types = {
   ERROR: 'ISSUE@LOADING:ERROR',
 };
 
-const Actions = {
+const ActionsIssue = {
   setItem: payload => ({
     type: Types.SET_ITEM,
     payload,
   }),
   fetchItem: (organization, repository, id) => async dispatch => {
-    dispatch(Actions.isLoading);
+    dispatch(ActionsIssue.isLoading);
     let issue = await issueAPI.getIssue(organization, repository, id);
-    dispatch(Actions.setItem(issue))
+    dispatch(ActionsIssue.setItem(issue))
   },
   isLoading: {
     type: Types.LOADING,
@@ -29,4 +29,4 @@ const Actions = {
   }),
 };
 
-export default Actions;
+export default ActionsIssue;

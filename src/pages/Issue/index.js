@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import IconButton from "@material-ui/core/IconButton";
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import {Link} from "react-router-dom";
-import {Header} from "../../components";
 import Markdown from 'markdown-to-jsx';
 
 import styles from './Issue.module.sass'
@@ -10,6 +9,8 @@ import Paper from "@material-ui/core/Paper";
 import Moment from "react-moment";
 import {useDispatch, useSelector} from "react-redux";
 import issueActions from "../../redux/actions/issue";
+
+import {Header} from "../../components";
 
 
 const Index = ({match}) => {

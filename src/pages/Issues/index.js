@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 const Index = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const {isLoading, items, page, pages, countIssues, ...current} = useSelector(({issues}) => (issues));
+  const {isLoading, error, items, page, pages, countIssues, ...current} = useSelector(({issues}) => (issues));
   const [organization, setOrganization] = useState('facebook');
   const [repository, setRepository] = useState('react');
 
@@ -101,23 +101,28 @@ const Index = () => {
             />
           </Paper>
         </div>
-        {items && <h5>{`All issues: ${countIssues}`}</h5>}
-        <div className={"items"}>
-          {!isLoading ? items ? items.map((item) => (
-              <IssueItem {...item} key={item.id}/>
-            )) : <h4 style={{textAlign: "center"}}>Input data for search...</h4>
-            :
-            'Загрузка...'
-          }
-        </div>
-        <div style={{textAlign: 'center'}}>
-          {!isLoading && items &&
-          <div className={classes.pagination}>
-            {isSmall && <Pagination onChange={handleChangePage} count={pages} defaultPage={page} siblingCount={0} size={"small"}  shape={"rounded"}/>}
-            {isMedium && <Pagination onChange={handleChangePage} count={pages} defaultPage={page} siblingCount={0} shape={"rounded"}/>}
-            {isLarge && <Pagination onChange={handleChangePage} count={pages} defaultPage={page} shape={"rounded"}/>}
-          </div>}
-        </div>
+        {!error ? <>
+          {items && <h5>{`All issues: ${countIssues}`}</h5>}
+          <div className={"items"}>
+            {!isLoading ? items ? items.map((item) => (
+                <IssueItem {...item} key={item.id}/>
+              )) : <p style={{textAlign: "center"}}>...</p>
+              :
+              'Загрузка...'
+            }
+          </div>
+          <div style={{textAlign: 'center'}}>
+            {!isLoading && items &&
+            <div className={classes.pagination}>
+              {isSmall &&
+              <Pagination onChange={handleChangePage} count={pages} defaultPage={page} siblingCount={0} size={"small"}
+                          shape={"rounded"}/>}
+              {isMedium && <Pagination onChange={handleChangePage} count={pages} defaultPage={page} siblingCount={0}
+                                       shape={"rounded"}/>}
+              {isLarge && <Pagination onChange={handleChangePage} count={pages} defaultPage={page} shape={"rounded"}/>}
+            </div>}
+          </div>
+        </> : error}
       </Paper>
     </>
   );
