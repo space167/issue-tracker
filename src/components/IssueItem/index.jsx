@@ -11,7 +11,8 @@ import "./IssueItem.sass"
 
 
 const IssueItem = props => {
-  const {id, title, created_at, state} = props;
+  let {id, title, created_at, state, url} = props;
+  const url_issue = url.replace('https://api.github.com/repos', '');
 
   return (
     <div className="item">
@@ -23,8 +24,8 @@ const IssueItem = props => {
         }
       </div>
       <div className="item-info">
-        <Typography gutterBottom variant="subtitle1">
-          <Link to={`/issue/${id}`}>{title}</Link>
+        <Typography gutterBottom variant="subtitle1" style={{lineHeight: '30px'}}>
+          <Link to={url_issue}>{title}</Link>
         </Typography>
         <Typography variant="body2" color="textSecondary">
           #{id} created at <Moment locale='ru' format="DD MMM YYYY">{created_at}</Moment>

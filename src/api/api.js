@@ -5,6 +5,20 @@ const instance = axios.create({
   // withCredentials: true
 });
 
+export const issueAPI = {
+  getIssue( organization, repository, id) {
+    return instance
+      .get(`https://api.github.com/repos/${organization}/${repository}/issues/${id}`)
+      .then(({data}) => {
+        return data;
+      })
+      .catch(err => {
+        // dispatch(Actions.isError(err));
+        return err;
+      });
+  }
+};
+
 export const issuesAPI = {
   getCountIssues(organization, repository) {
     return instance

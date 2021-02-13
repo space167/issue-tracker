@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="app">
       <Switch>
-        <Route exact path="/issue/:id" component={Issue}/>
+        <Route exact path="/:organization/:repository/issues/:id" component={Issue}/>
         <Route path={["/", "issues/:page"]} component={Issues}/>
       </Switch>
     </div>
