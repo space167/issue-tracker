@@ -3,6 +3,7 @@ import IconButton from "@material-ui/core/IconButton";
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import {Link} from "react-router-dom";
 import {Header} from "../../components";
+import Markdown from 'markdown-to-jsx';
 
 import styles from './Issue.module.sass'
 import Paper from "@material-ui/core/Paper";
@@ -41,9 +42,7 @@ const Index = ({match}) => {
           locale='ru'
           format="DD MMM YYYY">{item && item.created_at}</Moment>
         </h4>
-        <p>
-          {item && item.body}
-        </p>
+          {item && item.body && <Markdown>{item.body}</Markdown>}
       </Paper>
     </>
   )
