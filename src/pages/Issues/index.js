@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
-import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import SearchIcon from '@material-ui/icons/Search';
 import Pagination from "@material-ui/lab/Pagination";
 import {makeStyles} from "@material-ui/core";
 import {useMediaQuery} from 'react-responsive'
+import GitHubIcon from '@material-ui/icons/GitHub';
 import {Header, IssueItem} from "../../components";
+import IconButton from "@material-ui/core/IconButton";
+import InputBase from "@material-ui/core/InputBase";
 
 import "./Issues.sass"
 
@@ -37,6 +39,17 @@ let data = [
   },
 ];
 
+// for(let i=0; i<27; i++) {
+//   data.push({
+//     id: toString(Math.random()),
+//     title: "Bug: Native multiple only change value on second click on Firefox",
+//     date_created: "#93 by ngavalas was merged on 3 Jul 2013",
+//     created_at: "2021-02-12T07:22:04Z",
+//     closed_at: null,
+//     state: "open",
+//   })
+// }
+
 const useStyles = makeStyles((theme) => ({
   pagination: {
     display: 'inline-block',
@@ -46,6 +59,24 @@ const useStyles = makeStyles((theme) => ({
       display: 'inline-block',
       marginTop: theme.spacing(2),
     },
+  },
+  root: {
+    display: 'grid',
+    gridTemplateColumns: '5fr 1fr 5fr 1fr',
+    padding: '2px 4px',
+    alignItems: 'center',
+  },
+  input: {
+    marginLeft: theme.spacing(1),
+    flex: 1,
+    textAlign: 'center',
+  },
+  iconButton: {
+    padding: 10,
+  },
+  divider: {
+    height: 28,
+    margin: 4,
   },
 }));
 
@@ -69,22 +100,33 @@ const Index = () => {
 
   return (
     <>
-      <Header>Issue Tracker</Header>
+      <Header>
+        <IconButton component="span" style={{color: '#ffffff'}}>
+          <GitHubIcon/>
+        </IconButton>
+        Issue Trackers
+      </Header>
       <Paper className="issues-container">
-        <form className="search-container" noValidate autoComplete="off">
-          <TextField id="organization" label="Organization" value={organization}
-                     onChange={onHandlerChangeOrganization}/>
-          <TextField id="repository" label="Repository"
-                     value={repository}
-                     onChange={onHandlerChangeRepository}/>
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<SearchIcon>search</SearchIcon>}
-          >
-            Search
-          </Button>
-        </form>
+        <div className="search-container" noValidate autoComplete="off">
+          <Paper component="form" className={classes.root}>
+            <InputBase
+              label="Organization" value={organization}
+              onChange={onHandlerChangeOrganization}
+              placeholder="Organization"
+              inputProps={{'aria-label': 'organization'}}
+            />
+            <span className={classes.divider}>/</span>
+            <InputBase
+              value={repository}
+              onChange={onHandlerChangeRepository}
+              placeholder="Repository"
+              inputProps={{'aria-label': 'repository'}}
+            />
+            <Button
+              startIcon={<SearchIcon>search</SearchIcon>}
+            />
+          </Paper>
+        </div>
         <div className={"items"}>
           {data.map((item) => (
             <IssueItem {...item} key={item.id}/>

@@ -16,12 +16,11 @@ const IssueItem = props => {
   return (
     <div className="item">
       <div className="icon-container">
-        <Tooltip title={state} aria-label={state}>
-          {state === "open" ?
-            <ErrorOutlineIcon className="state open"/> :
-            <HighlightOffIcon className="state closed"/>
-          }
-        </Tooltip>
+        {state === "open" ?
+          <Tooltip title="Open">
+            <span><ErrorOutlineIcon className={`state ${state}`}/></span></Tooltip> :
+          <Tooltip title="Closed"><span><HighlightOffIcon className={`state ${state}`}/></span></Tooltip>
+        }
       </div>
       <div className="item-info">
         <Typography gutterBottom variant="subtitle1">

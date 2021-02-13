@@ -1,17 +1,14 @@
-//#cb2431 - var(--color-text-danger); (красная иконка)
-//#22863a - var(--color-icon-success); (зеленая иконка)
-//#eaecef - var(--color-border-secondary); (фон item)
-//#f6f8fa - var(--color-focus-item) (фон фокус)
+@import './styles/variables.sass'
 
 a
   &,
   &:hover,
   &:focus,
   &:visited
-    color: #24292e
+    color: $text-color
     text-decoration: none
   &:hover
-    color: #0366d6
+    color: $primary-color
 
 .app
   margin: 0 auto
