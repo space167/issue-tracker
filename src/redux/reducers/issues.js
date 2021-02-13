@@ -1,6 +1,9 @@
 import {Types} from '../actions/issues';
 
 const initState = {
+  organization: null,
+  repository: null,
+  page: null,
   items: null,
   isLoading: false,
   error: null,
@@ -29,5 +32,6 @@ export default (state = initState, action) => {
         error: action.payload,
       };
     default:
+      return state;
   }
 };

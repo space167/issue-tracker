@@ -29,7 +29,7 @@ const Index = ({match}) => {
         </Link>
         Issue <span className={'id-task'}>#{id}</span>
       </Header>
-      <Paper  className="issues-container">
+      <Paper  className={styles["issues-container"]}>
         <h2>{title}</h2>
         <h4 className={styles['subtitle']}>
           <span className={`state ${styles[state]}`}>{state}</span> created at <Moment locale='ru' format="DD MMM YYYY">{created_at}</Moment></h4>

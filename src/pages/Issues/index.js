@@ -41,7 +41,7 @@ let data = [
 
 // for(let i=0; i<27; i++) {
 //   data.push({
-//     id: toString(Math.random()),
+//     id: String(Math.random()),
 //     title: "Bug: Native multiple only change value on second click on Firefox",
 //     date_created: "#93 by ngavalas was merged on 3 Jul 2013",
 //     created_at: "2021-02-12T07:22:04Z",
@@ -83,6 +83,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Index = () => {
   const classes = useStyles();
+
   const [organization, setOrganization] = useState('');
   const [repository, setRepository] = useState('');
 
