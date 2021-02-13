@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import SearchIcon from '@material-ui/icons/Search';
@@ -9,46 +9,11 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import {Header, IssueItem} from "../../components";
 import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
+import {useDispatch, useSelector} from "react-redux";
+import issueActions, {fetchCountItems} from "../../redux/actions/issues";
 
 import "./Issues.sass"
 
-let data = [
-  {
-    id: "213213321",
-    title: "Bug: Native multiple only change value on second click on Firefox",
-    date_created: "#93 by ngavalas was merged on 3 Jul 2013",
-    created_at: "2021-02-12T07:22:04Z",
-    closed_at: null,
-    state: "open",
-  },
-  {
-    id: "213213322",
-    title: "Bug: Native multiple only change value on second click on Firefox",
-    date_created: "#93 by ngavalas was merged on 3 Jul 2013",
-    created_at: "2021-02-12T07:22:04Z",
-    closed_at: "2021-02-12T07:22:04Z",
-    state: "closed",
-  },
-  {
-    id: "213213323",
-    title: "Bug: Native multiple only change value on second click on Firefox",
-    date_created: "#93 by ngavalas was merged on 3 Jul 2013",
-    created_at: "2021-02-12T07:22:04Z",
-    closed_at: null,
-    state: "open",
-  },
-];
-
-// for(let i=0; i<27; i++) {
-//   data.push({
-//     id: String(Math.random()),
-//     title: "Bug: Native multiple only change value on second click on Firefox",
-//     date_created: "#93 by ngavalas was merged on 3 Jul 2013",
-//     created_at: "2021-02-12T07:22:04Z",
-//     closed_at: null,
-//     state: "open",
-//   })
-// }
 
 const useStyles = makeStyles((theme) => ({
   pagination: {
@@ -82,10 +47,11 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Index = () => {
+  const dispatch = useDispatch();
   const classes = useStyles();
-
-  const [organization, setOrganization] = useState('');
-  const [repository, setRepository] = useState('');
+  const {isLoading, items} = useSelector(({issues}) => (issues));
+  const [organization, setOrganization] = useState('facebook');
+  const [repository, setRepository] = useState('react');
 
   const isSmall = useMediaQuery({query: '(max-width: 399px)'})
   const isMedium = useMediaQuery({query: '(min-width: 400px) and (max-width: 599px)'})
@@ -97,6 +63,10 @@ const Index = () => {
 
   const onHandlerChangeRepository = (e) => {
     setRepository(e.target.value)
+  };
+
+  const searchIssues = () => {
+    dispatch(issueActions.fetchDataIssues(organization, repository))
   };
 
   return (
@@ -124,21 +94,26 @@ const Index = () => {
               inputProps={{'aria-label': 'repository'}}
             />
             <Button
+              onClick={searchIssues}
               startIcon={<SearchIcon>search</SearchIcon>}
             />
           </Paper>
         </div>
         <div className={"items"}>
-          {data.map((item) => (
-            <IssueItem {...item} key={item.id}/>
-          ))}
+          {!isLoading ? items ? items.map((item) => (
+              <IssueItem {...item} key={item.id}/>
+            )) : <h4 style={{textAlign: "center"}}>Input data for search...</h4>
+            :
+            'Загрузка...'
+          }
         </div>
         <div style={{textAlign: 'center'}}>
+          {!isLoading && items &&
           <div className={classes.pagination}>
             {isSmall && <Pagination count={3} shape={"rounded"}/>}
             {isMedium && <Pagination count={5} shape={"rounded"}/>}
             {isLarge && <Pagination count={10} shape={"rounded"}/>}
-          </div>
+          </div>}
         </div>
       </Paper>
     </>
