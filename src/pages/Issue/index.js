@@ -12,14 +12,16 @@ import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import issueActions from '../../redux/actions/issue';
 import {Header} from '../../components';
 import './Issue.sass'
+import Alert from "@material-ui/lab/Alert";
 
 const Issue = ({match}) => {
   const {id, organization, repository} = match.params;
   const dispatch = useDispatch();
-  const {item, isLoading} = useSelector(({issues, issue}) => {
+  const {item, isLoading, error} = useSelector(({issue}) => {
     return {
       isLoading: issue.isLoading,
       item: issue.item,
+      error: issue.error,
     }
   });
 
@@ -48,8 +50,7 @@ const Issue = ({match}) => {
             </div>
             <Skeleton variant="rect" style={{height: "200px"}}/>
           </div>
-          :
-          <div className={"content"}>
+          : error ? <Alert severity="error">{error}</Alert> : <div className={"content"}>
             <h2>{item && item.title}</h2>
             <h4 className={"subtitle"}>
               <span

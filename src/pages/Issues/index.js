@@ -14,6 +14,7 @@ import issueActions from "../../redux/actions/issues";
 import Preloader from "../../components/Preloader/Preloader";
 import {Header, IssueItem} from "../../components";
 import "./Issues.sass"
+import Alert from "@material-ui/lab/Alert";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -124,7 +125,7 @@ const Issues = () => {
               {isLarge && <Pagination onChange={handleChangePage} count={pages} defaultPage={page} shape={"rounded"}/>}
             </div>}
           </div>
-        </> : <p className="error">{error}</p>}
+        </> : <Alert style={{margin: '5px'}} severity="error">{error}</Alert>}
       </Paper>
     </>
   );
