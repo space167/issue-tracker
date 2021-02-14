@@ -10,7 +10,6 @@ import Zoom from "@material-ui/core/Zoom";
 
 import "./IssueItem.sass"
 
-
 const IssueItem = ({id, title, created_at, state, url, index}) => {
   const url_issue = url.replace('https://api.github.com/repos', '');
 

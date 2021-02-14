@@ -2,7 +2,7 @@ import React from 'react';
 import styles from "./Preloader.module.sass";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-const Preloader = () => {
+const Preloader = ({}) => {
   return (
     <div className={styles['preloader-container']}>
       <CircularProgress />

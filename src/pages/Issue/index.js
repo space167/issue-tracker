@@ -11,8 +11,9 @@ import Skeleton from "@material-ui/lab/Skeleton";
 import {Header} from "../../components";
 
 import styles from './Issue.module.sass'
+import PropTypes from "prop-types";
 
-const Index = ({match}) => {
+const Issue = ({match}) => {
   const {id, organization, repository} = match.params;
   const dispatch = useDispatch();
   const {item, isLoading} = useSelector(({issues, issue}) => {
@@ -65,4 +66,14 @@ const Index = ({match}) => {
   )
 };
 
-export default Index;
+Issue.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      organization: PropTypes.string.isRequired,
+      repository: PropTypes.string.isRequired,
+    })
+  }),
+};
+
+export default Issue;

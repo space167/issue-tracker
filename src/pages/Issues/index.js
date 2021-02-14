@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Index = () => {
+const Issues = ({}) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const {isLoading, error, items, page, pages, countIssues, ...current} = useSelector(({issues}) => (issues));
@@ -130,4 +130,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Issues;
