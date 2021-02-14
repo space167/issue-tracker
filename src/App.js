@@ -10,7 +10,7 @@ function App() {
     <div className="app">
       <Switch>
         <Route exact path="/:organization/:repository/issues/:id" component={Issue}/>
-        <Route path={["/", "issues/:page"]} component={Issues}/>
+        <Route exact path={["/", "/:organization/:repository/issues/page/:page"]} component={Issues}/>
       </Switch>
     </div>
   );

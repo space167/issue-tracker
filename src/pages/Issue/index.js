@@ -8,20 +8,21 @@ import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import Skeleton from '@material-ui/lab/Skeleton';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import Alert from "@material-ui/lab/Alert";
 
 import issueActions from '../../redux/actions/issue';
 import {Header} from '../../components';
 import './Issue.sass'
-import Alert from "@material-ui/lab/Alert";
 
 const Issue = ({match}) => {
   const {id, organization, repository} = match.params;
   const dispatch = useDispatch();
-  const {item, isLoading, error} = useSelector(({issue}) => {
+  const {item, isLoading, error, page} = useSelector(({issue, issues}) => {
     return {
       isLoading: issue.isLoading,
       item: issue.item,
       error: issue.error,
+      page: issues.page ? issues.page : 1,
     }
   });
 
@@ -32,7 +33,7 @@ const Issue = ({match}) => {
   return (
     <>
       <Header>
-        <Link to={"/"}>
+        <Link to={`/${organization}/${repository}/issues/page/${page}`}>
           <IconButton component="span" style={{color: '#ffffff'}}>
             <KeyboardBackspaceIcon/>
           </IconButton>

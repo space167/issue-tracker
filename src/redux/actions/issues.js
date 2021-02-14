@@ -13,13 +13,13 @@ const ActionsIssues = {
     type: Types.SET_DATA_ISSUES,
     payload,
   }),
-  fetchDataIssues: (organization, repository) => async dispatch => {
+  fetchDataIssues: (organization, repository, page) => async dispatch => {
     dispatch(ActionsIssues.isLoading);
     let countIssues = await issuesAPI.getCountIssues(organization, repository);
     if (countIssues) {
       dispatch(ActionsIssues.setDataIssues({organization, repository, countIssues}))
       if (countIssues.total_count > 0) {
-        dispatch(ActionsIssues.fetchItems(organization, repository, 1))
+        dispatch(ActionsIssues.fetchItems(organization, repository, page))
       } else {
         dispatch(ActionsIssues.setItems({issues: [], page: null}))
       }
