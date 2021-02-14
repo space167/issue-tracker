@@ -1,17 +1,17 @@
 import React, {useEffect} from 'react';
-import IconButton from "@material-ui/core/IconButton";
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import {useDispatch, useSelector} from "react-redux";
+import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import Markdown from 'markdown-to-jsx';
-import Paper from "@material-ui/core/Paper";
 import Moment from "react-moment";
-import {useDispatch, useSelector} from "react-redux";
-import issueActions from "../../redux/actions/issue";
+import Paper from "@material-ui/core/Paper";
+import IconButton from "@material-ui/core/IconButton";
 import Skeleton from "@material-ui/lab/Skeleton";
-import {Header} from "../../components";
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
+import issueActions from "../../redux/actions/issue";
+import {Header} from "../../components";
 import styles from './Issue.module.sass'
-import PropTypes from "prop-types";
 
 const Issue = ({match}) => {
   const {id, organization, repository} = match.params;

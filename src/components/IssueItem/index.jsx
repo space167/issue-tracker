@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Moment from "react-moment";
 import {Link} from "react-router-dom";
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
 import Zoom from "@material-ui/core/Zoom";
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 
 import "./IssueItem.sass"
 

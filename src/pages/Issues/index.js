@@ -1,18 +1,18 @@
 import React, {useState} from 'react';
+import {useMediaQuery} from 'react-responsive'
+import {useDispatch, useSelector} from "react-redux";
+import {makeStyles} from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
-import SearchIcon from '@material-ui/icons/Search';
-import Pagination from "@material-ui/lab/Pagination";
-import {makeStyles} from "@material-ui/core";
-import {useMediaQuery} from 'react-responsive'
-import GitHubIcon from '@material-ui/icons/GitHub';
-import {Header, IssueItem} from "../../components";
 import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
-import {useDispatch, useSelector} from "react-redux";
+import Pagination from "@material-ui/lab/Pagination";
+import SearchIcon from '@material-ui/icons/Search';
+import GitHubIcon from '@material-ui/icons/GitHub';
+
 import issueActions from "../../redux/actions/issues";
 import Preloader from "../../components/Preloader/Preloader";
-
+import {Header, IssueItem} from "../../components";
 import "./Issues.sass"
 
 
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Issues = ({}) => {
+const Issues = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const {isLoading, error, items, page, pages, countIssues, ...current} = useSelector(({issues}) => (issues));
