@@ -1,17 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Moment from "react-moment";
-import {Link} from "react-router-dom";
-import Typography from "@material-ui/core/Typography";
-import Tooltip from "@material-ui/core/Tooltip";
-import Zoom from "@material-ui/core/Zoom";
+import Moment from 'react-moment';
+import {Link} from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
+import Tooltip from '@material-ui/core/Tooltip';
+import Zoom from '@material-ui/core/Zoom';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 
-import "./IssueItem.sass"
+import styles from './IssueItem.module.sass'
 
 const IssueItem = ({id, title, created_at, state, url, index}) => {
-  const url_issue = url.replace('https://api.github.com/repos', '');
+  const url_issue = url.replace("https://api.github.com/repos", "");
 
   return (
     <Zoom in={true}
@@ -19,20 +19,20 @@ const IssueItem = ({id, title, created_at, state, url, index}) => {
             transitionDelay: `${index * 50}ms`,
           }}
     >
-      <div className="item">
-        <div className="icon-container">
+      <div className={styles["item"]}>
+        <div className={styles["icon-container"]}>
           {state === "open" ?
             <Tooltip title="Open">
-              <span><ErrorOutlineIcon className={`state ${state}`}/></span></Tooltip> :
-            <Tooltip title="Closed"><span><HighlightOffIcon className={`state ${state}`}/></span></Tooltip>
+              <span><ErrorOutlineIcon className={`${styles["state"]} ${styles[state]}`}/></span></Tooltip> :
+            <Tooltip title="Closed"><span><HighlightOffIcon className={`${styles["state"]} ${styles[state]}`}/></span></Tooltip>
           }
         </div>
-        <div className="item-info">
-          <Typography gutterBottom variant="subtitle1" style={{lineHeight: '30px'}}>
+        <div className={styles["item-info"]}>
+          <Typography gutterBottom variant="subtitle1" style={{lineHeight: "30px"}}>
             <Link to={url_issue}>{title}</Link>
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            #{id} created at <Moment locale='ru' format="DD MMM YYYY">{created_at}</Moment>
+            #{id} created at <Moment locale="ru" format="DD MMM YYYY">{created_at}</Moment>
           </Typography>
         </div>
       </div>

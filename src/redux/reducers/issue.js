@@ -18,6 +18,7 @@ const issueReducer = (state = initState, action) => {
       return {
         ...state,
         isLoading: true,
+        error: null,
       };
     case Types.LOADED:
       return {

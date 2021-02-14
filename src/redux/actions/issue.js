@@ -15,7 +15,11 @@ const ActionsIssue = {
   fetchItem: (organization, repository, id) => async dispatch => {
     dispatch(ActionsIssue.isLoading);
     let issue = await issueAPI.getIssue(organization, repository, id);
-    dispatch(ActionsIssue.setItem(issue))
+    if (issue) {
+      dispatch(ActionsIssue.setItem(issue))
+    } else {
+      dispatch(ActionsIssue.isError("Failed to get data..."))
+    }
   },
   isLoading: {
     type: Types.LOADING,
@@ -23,9 +27,9 @@ const ActionsIssue = {
   isLoaded: {
     type: Types.LOADED,
   },
-  isError: err => ({
+  isError: payload => ({
     type: Types.ERROR,
-    payload: err,
+    payload,
   }),
 };
 

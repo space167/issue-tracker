@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(2),
     },
   },
-  root: {
+  search: {
     display: 'grid',
     gridTemplateColumns: '5fr 1fr 5fr 1fr',
     padding: '2px 4px',
@@ -83,7 +83,7 @@ const Issues = () => {
       </Header>
       <Paper className="issues-container">
         <div className="search-container" noValidate autoComplete="off">
-          <Paper component="form" className={classes.root}>
+          <Paper component="form" className={classes.search}>
             <InputBase
               label="Organization" value={organization}
               onChange={onHandlerChangeOrganization}
