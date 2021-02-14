@@ -4,8 +4,6 @@ const instance = axios.create({
   baseURL: 'https://api.github.com/',
 });
 
-
-
 export const issueAPI = {
   getIssue(organization, repository, id) {
     return instance

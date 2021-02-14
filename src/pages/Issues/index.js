@@ -11,8 +11,10 @@ import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
 import {useDispatch, useSelector} from "react-redux";
 import issueActions from "../../redux/actions/issues";
+import Preloader from "../../components/Preloader/Preloader";
 
 import "./Issues.sass"
+
 
 const useStyles = makeStyles((theme) => ({
   pagination: {
@@ -104,11 +106,11 @@ const Index = () => {
         {!error ? <>
           {items && <h5>{`All issues: ${countIssues}`}</h5>}
           <div className={"items"}>
-            {!isLoading ? items ? items.map((item) => (
-                <IssueItem {...item} key={item.id}/>
+            {!isLoading ? items ? items.map((item ,index) => (
+                <IssueItem {...item} index={index} key={item.id}/>
               )) : <p style={{textAlign: "center"}}>...</p>
               :
-              'Загрузка...'
+              <Preloader/>
             }
           </div>
           <div style={{textAlign: 'center'}}>
@@ -122,7 +124,7 @@ const Index = () => {
               {isLarge && <Pagination onChange={handleChangePage} count={pages} defaultPage={page} shape={"rounded"}/>}
             </div>}
           </div>
-        </> : error}
+        </> : <p className="error">{error}</p>}
       </Paper>
     </>
   );
