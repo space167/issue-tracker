@@ -81,8 +81,6 @@ const Issues = ({match}) => {
   useEffect(() => {
     if (params.organization || params.repository || params.page) {
       if (params.organization !== current.organization || params.repository !== current.repository || params.page !== current.page) {
-        console.log(params, current)
-        console.log('Получаем список')
         dispatch(issueActions.fetchDataIssues(params.organization, params.repository, params.page))
       }
     }
