@@ -13,28 +13,21 @@ const ActionsIssues = {
     type: Types.SET_DATA_ISSUES,
     payload,
   }),
-  fetchDataIssues: (organization, repository, page) => async dispatch => {
-    dispatch(ActionsIssues.isLoading);
-    let countIssues = await issuesAPI.getCountIssues(organization, repository);
-    if (countIssues) {
-      dispatch(ActionsIssues.setDataIssues({organization, repository, countIssues}))
-      if (countIssues.total_count > 0) {
-        dispatch(ActionsIssues.fetchItems(organization, repository, page))
-      } else {
-        dispatch(ActionsIssues.setItems({issues: [], page: null}))
-      }
-    } else {
-      dispatch(ActionsIssues.isError("Failed to get data..."))
+  fetchDataIssues: (organization, repository, page) => {
+    return dispatch => {
+      dispatch(ActionsIssues.isLoading);
+      issuesAPI.getCountIssues(dispatch, organization, repository, page);
     }
   },
   setItems: payload => ({
     type: Types.SET_ITEMS,
     payload,
   }),
-  fetchItems: (organization, repository, page) => async dispatch => {
-    dispatch(ActionsIssues.isLoading);
-    let issues = await issuesAPI.getIssues(organization, repository, page);
-    dispatch(ActionsIssues.setItems({issues, page}))
+  fetchItems: (organization, repository, page) => {
+    return dispatch => {
+      dispatch(ActionsIssues.isLoading);
+      issuesAPI.getIssues(dispatch, organization, repository, page);
+    }
   },
   isLoading: {
     type: Types.LOADING,

@@ -1,38 +1,45 @@
 import * as axios from "axios";
+import ActionsIssue from "../redux/actions/issue";
+import ActionsIssues from "../redux/actions/issues";
 
 const instance = axios.create({
   baseURL: 'https://api.github.com/',
 });
 
 export const issueAPI = {
-  getIssue(organization, repository, id) {
-    return instance
+  getIssue(dispatch, organization, repository, id) {
+    instance
       .get(`https://api.github.com/repos/${organization}/${repository}/issues/${id}`)
       .then(({data}) => {
-        return data;
+        dispatch(ActionsIssue.setItem(data))
       })
       .catch(err => {
-        console.error(err)
+        dispatch(ActionsIssue.isError("Failed to get data..."))
       });
   }
 };
 
 export const issuesAPI = {
-  getCountIssues(organization, repository) {
-    return instance
+  getCountIssues(dispatch, organization, repository, page) {
+    instance
       .get(`/search/issues?q=repo:${organization}/${repository}+type:issue&per_page=1`)
       .then(({data}) => {
-        return data;
-      })
+          dispatch(ActionsIssues.setDataIssues({organization, repository, data}))
+          if (data.total_count > 0) {
+            dispatch(ActionsIssues.fetchItems(organization, repository, page))
+          } else {
+            dispatch(ActionsIssues.setItems({issues: [], page: null}))
+          }
+        })
       .catch(err => {
-        console.error(err)
+        dispatch(ActionsIssues.isError("Failed to get data..."))
       });
   },
-  getIssues(organization, repository, page) {
-    return instance
+  getIssues(dispatch, organization, repository, page) {
+    instance
       .get(`/repos/${organization}/${repository}/issues?state=all&page=${page}&per_page=30`)
       .then(({data}) => {
-        return data;
+        dispatch(ActionsIssues.setItems({data, page}))
       })
       .catch(err => {
         console.error(err)

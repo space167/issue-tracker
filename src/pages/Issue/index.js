@@ -22,7 +22,7 @@ const Issue = ({match}) => {
       isLoading: issue.isLoading,
       item: issue.item,
       error: issue.error,
-      page: issues.page ? issues.page : 1,
+      page: issues.page ?? 1,
     }
   });
 

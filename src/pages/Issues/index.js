@@ -55,8 +55,8 @@ const Issues = ({match}) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const {isLoading, error, items, pages, countIssues, ...current} = useSelector(({issues}) => (issues));
-  const [organization, setOrganization] = useState(params.organization ? params.organization : "");
-  const [repository, setRepository] = useState(params.repository ? params.repository : "");
+  const [organization, setOrganization] = useState(params.organization ?? "");
+  const [repository, setRepository] = useState(params.repository ?? params.repository);
 
   const isSmall = useMediaQuery({query: '(max-width: 399px)'});
   const isMedium = useMediaQuery({query: '(min-width: 400px) and (max-width: 599px)'});

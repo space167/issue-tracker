@@ -16,7 +16,7 @@ const issuesReducer = (state = initState, action) => {
     case Types.SET_ITEMS:
       return {
         ...state,
-        items: action.payload.issues,
+        items: action.payload.data,
         isLoading: false,
         page: action.payload.page,
       };
@@ -26,8 +26,8 @@ const issuesReducer = (state = initState, action) => {
         organization: action.payload.organization,
         repository: action.payload.repository,
         page: 1,
-        pages: Math.ceil(action.payload.countIssues.total_count/30),
-        countIssues: action.payload.countIssues.total_count,
+        pages: Math.ceil(action.payload.data.total_count / 30),
+        countIssues: action.payload.data.total_count,
       };
     case Types.LOADING:
       return {
